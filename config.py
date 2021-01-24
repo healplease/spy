@@ -2,12 +2,9 @@ import os
 from urllib import parse
 
 class Config():
-    DEBUG = os.environ.get('FLASK_DEBUG', True)
-    SECRET_KEY = 'testkey'
-
     # main settings
-    DEBUG = True
-    SECRET_KEY = 'flask'
+    DEBUG = bool(os.environ.get('FLASK_DEBUG', 1))
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'flask')
 
     # database settings
     MONGO_PROTOCOL = 'mongodb+srv'
