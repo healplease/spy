@@ -31,6 +31,7 @@ class User(Model):
     def get_id(self):
         return self.instance['username']
 
+
 class Game(Model):
     id_field = 'gameId'
 
