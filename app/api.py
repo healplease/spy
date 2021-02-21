@@ -8,7 +8,7 @@ from app.api_utils import success, error
 
 @app.route('/api/v1', methods=['GET'])
 def api():
-    routes = [
+    routes = [ 
         {
             'methods': list(rule.methods - {'HEAD', 'OPTIONS'}),    # removing methods we do not interested in
             'url': str(rule)  # print all endpoints
