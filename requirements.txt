@@ -1,4 +1,6 @@
+pip
 flask
 pymongo
 gunicorn
 dnspython
+flask-cors
