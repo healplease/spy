@@ -37,28 +37,28 @@ def api_get_game(game):
     return success(game)
 
 
-@app.route('/api/v1/game/<game>/create', methods=['POST'])
-def api_create_game(game):
-    query = { 'gameId': game }
+@app.route('/api/v1/game/<game_id>/create', methods=['POST'])
+def api_create_game(game_id):
+    query = { 'gameId': game_id } 
     projection = { '_id': 0 }
     game = db.games.find_one(query, projection)
 
     if game:
-        return error(401, 'Game already exists.')
+        return error(403, 'Game already exists.')
 
-    new_game_id = request.form.get('gameId', '')
+    new_game_id = game_id
     if not 4 <= len(new_game_id) <= 32:
-        return error(401, f'Game ID length should be between {4} and {32}.')
+        return error(403, f'Game ID length should be between {4} and {32}.')
 
     if not new_game_id.isidentifier():
-        return error(401, f'Game ID can only contain letters, numbers, underscore ("_") and should not start with number.')
+        return error(403, f'Game ID can only contain letters, numbers, underscore ("_") and should not start with number.')
 
     document = { 
         'gameId': new_game_id 
     }
     db.games.insert_one(document)
 
-    query = { 'gameId': game }
+    query = { 'gameId': game_id }
     projection = { '_id': 0 }
     game = db.games.find_one(query, projection)
 

@@ -47,7 +47,7 @@ class Game(Model):
 
     @staticmethod
     def validate_id(game_id: str) -> bool:
-        return bool(re.match(r'[A-Za-z][A-Za-z_0-9]{3,31}', game_id))
+        return bool(re.match(r'[A-Za-z_][A-Za-z_0-9]{3,31}', game_id))
         # return game_id.isidentifier() and (4 <= game_id <= 32)
 
     @classmethod
