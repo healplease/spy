@@ -5,6 +5,7 @@ from flask import request, url_for
 from app import app, db
 from app.api_utils import success, error
 
+
 @app.route('/api/v1', methods=['GET'])
 def api():
     routes = [
