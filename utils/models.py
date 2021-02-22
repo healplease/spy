@@ -29,7 +29,6 @@ class Model(object):
 
     @classmethod
     def create(cls, pk:str, *args, **kwargs):
-
         query = { cls.pk: pk }
         instance = db[cls.collection].find_one(query, ID_PROJECTION)
 
@@ -38,16 +37,25 @@ class Model(object):
 
         document = {**kwargs, **{ cls.pk: pk }}
         db[cls.collection].insert_one(document)
-
         return cls(pk)
     
     def read(self):
-        return self.instance
+        query = { self.__class__.pk: self.instance[self.__class__.pk] }
+        instance = db[self.__class__.collection].find_one(query, ID_PROJECTION)
+        self.instance = instance
+        return self # not sure is need to return it, but why not
 
     def update(self, *args, **kwargs):
-        pass
+        kwargs.pop(self.__class__.pk, None) # prevent updating of the pk itself - it can't be changed through model
+
+        query = { self.__class__.pk: self.instance[self.__class__.pk] }
+        update = { '$set': kwargs }
+        db[self.__class__.collection].update_one(query, update)
+        
+        self.read()  # update the instance as well
 
     def delete(self):
-        query = { self.__class__.pk: self.username }
+        query = { self.__class__.pk: self.instance[self.__class__.pk] }
         db[self.__class__.collection].delete_one(query)
+
         # TODO: display deletion result
