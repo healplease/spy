@@ -6,7 +6,7 @@ class Config():
     DEBUG = bool(os.environ.get('FLASK_DEBUG', 1))
     SECRET_KEY = os.environ.get('SECRET_KEY', 'flask')
 
-    TESTING = True
+    #TESTING = True
 
     # database settings
     MONGO_PROTOCOL = 'mongodb+srv'
