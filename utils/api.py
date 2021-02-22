@@ -1,6 +1,4 @@
-from typing import Any
-
-def success(data: Any, **kwargs) -> dict:
+def success(data, **kwargs) -> dict:
     return {
         **{ 
             'status': True, 

@@ -18,5 +18,4 @@ client = MongoClient(app.config.get('DATABASE_URL'))
 db = client[app.config.get('MONGO_DATABASE')]
 
 # import views after app init to escape circular import
-from app import views
-from app import api, api_utils
+from app import models, views, api

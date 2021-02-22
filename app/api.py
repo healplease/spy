@@ -2,8 +2,8 @@ from string import ascii_letters, digits
 
 from flask import request, url_for
 
-from app import app, db
-from app.api_utils import success, error
+from app import app, db, models
+from utils.api import success, error
 
 
 @app.route('/api/v1', methods=['GET'])
@@ -30,50 +30,20 @@ def api_get_games_list():
 
 @app.route('/api/v1/game/<game>', methods=['GET'])
 def api_get_game(game):
-    query = { 'gameId': game }
-    projection = { '_id': 0 }
-    game = db.games.find_one(query, projection)
-
-    return success(game)
+    return success({})
 
 
 @app.route('/api/v1/game/<game_id>/create', methods=['POST'])
 def api_create_game(game_id):
-    query = { 'gameId': game_id } 
-    projection = { '_id': 0 }
-    game = db.games.find_one(query, projection)
-
-    if game:
-        return error(403, 'Game already exists.')
-
-    new_game_id = game_id
-    if not 4 <= len(new_game_id) <= 32:
-        return error(403, f'Game ID length should be between {4} and {32}.')
-
-    if not new_game_id.isidentifier():
-        return error(403, f'Game ID can only contain letters, numbers, underscore ("_") and should not start with number.')
-
-    document = { 
-        'gameId': new_game_id 
-    }
-    db.games.insert_one(document)
-
-    query = { 'gameId': game_id }
-    projection = { '_id': 0 }
-    game = db.games.find_one(query, projection)
-
-    return success(game)
+    try:
+        game = models.Game.create(game_id)
+        return success(game)
+    except Exception as e:
+        return error(403, e)
 
 
 @app.route('/api/v1/game/<game>/join', methods=['POST'])
 def api_join_game(game):
-    query = { 'gameId': game }
-    projection = { '_id': 0 }
-    game = db.games.find_one(query, projection)
-
-    if game:
-        return error(404, 'This game does not exist.')
-
     return success({})
 
 

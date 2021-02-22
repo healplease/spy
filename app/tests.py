@@ -20,3 +20,13 @@ class TestUser(unittest.TestCase):
         user = User.create('alice')
         self.assertEqual(str(user), '<User:username=alice>')
         user.delete()
+
+    def test_game_validate_id(self):
+        self.assertTrue(Game.validate_id('validid'))
+        self.assertTrue(Game.validate_id('valid_ID123'))
+        self.assertFalse(Game.validate_id('23invalid'))
+        self.assertFalse(Game.validate_id('_somethingFalse'))
+        self.assertFalse(Game.validate_id('tooShort'[:3]))
+        self.assertFalse(Game.validate_id('tooLong'*10))
+        self.assertFalse(Game.validate_id('no spaces allowed'))
+        self.assertFalse(Game.validate_id('punctution-not-allowed'))
