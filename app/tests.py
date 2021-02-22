@@ -1,13 +1,12 @@
 import unittest
 
-from app import app, client
+from app import app, db, client
 from app.models import User, Game
 
-db = client['test']
-
 class TestUser(unittest.TestCase):
+    db = client['test']
     # clear before tests
-    try:       
+    try:
         User.create('alice').delete()
     except Exception:
         User('alice').delete()
