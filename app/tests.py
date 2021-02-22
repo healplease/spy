@@ -45,13 +45,14 @@ class TestUser(unittest.TestCase):
         self.assertEqual(str(user), '<User:username=alice>')
         user.delete()
 
+
 class TestGame(unittest.TestCase):
     def test_game_validate_id(self):
-        self.assertTrue(Game.validate_id('validid'))
-        self.assertTrue(Game.validate_id('valid_ID123'))
-        self.assertFalse(Game.validate_id('23invalid'))
-        self.assertFalse(Game.validate_id('_somethingFalse'))
-        self.assertFalse(Game.validate_id('tooShort'[:3]))
-        self.assertFalse(Game.validate_id('tooLong'*10))
-        self.assertFalse(Game.validate_id('no spaces allowed'))
+        self.assertTrue(Game.validate_id('validid'))                # test only lower letters
+        self.assertTrue(Game.validate_id('valid_ID123'))            # test lower, upper letters, numbers and underscore (in valid order) 
+        self.assertFalse(Game.validate_id('23invalid'))             # test numbers on front
+        self.assertFalse(Game.validate_id('_somethingFalse'))       # test underscore on front
+        self.assertFalse(Game.validate_id('tooShort'[:3]))          # test short ID (len < 4)
+        self.assertFalse(Game.validate_id('tooLong'*10))            # test long ID (len > 32)
+        self.assertFalse(Game.validate_id('no spaces allowed'))     # test invalid symbols
         self.assertFalse(Game.validate_id('punctution-not-allowed'))
