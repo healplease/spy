@@ -10,6 +10,7 @@ class Config():
     FLASK_HOST = os.environ.get('FLASK_HOST', gethostbyname(gethostname()))
     FLASK_PORT = os.environ.get('FLASK_PORT', 8000)
 
+    # is this is True, testing runs on every launch (from executing spy.py)
     TESTING = True
 
     # database settings
