@@ -14,7 +14,7 @@ class Model(object):
         instance = db[self.collection].find_one(query, ID_PROJECTION)
 
         if not instance:
-            raise Exception('Instance with this PK not found.')
+            raise Exception(f'Instance with this {self.__class__.pk} not found.')
 
         self.instance = instance
 
@@ -48,7 +48,7 @@ class Model(object):
     def update(self, *args, **kwargs):
         kwargs.pop(self.__class__.pk, None) # prevent updating of the pk itself - it can't be changed through model
 
-        if kwargs:  # if only pk reied to update
+        if kwargs:  # if we have what to update :D
             query = { self.__class__.pk: self.instance[self.__class__.pk] }
             update = { '$set': kwargs }
             db[self.__class__.collection].update_one(query, update)

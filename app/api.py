@@ -33,25 +33,26 @@ def api_get_games_list():
 def api_get_game(game_id:str):
     try:
         game = Game(game_id)
-        return success(game)
+        return success(game.instance)
     except Exception as e:
         return error(404, str(e))
 
 
-@app.route('/api/v1/game/<game_id>/create', methods=['POST'])
-def api_create_game(game_id:str):
+@app.route('/api/v1/game/create', methods=['POST'])
+def api_create_game():
+    game_id = request.json.get('gameId', '')
     try:
         game = Game.create(game_id)
-        return success(game)
+        return success(game.instance)
     except Exception as e:
         return error(403, str(e))
 
 
-@app.route('/api/v1/game/<game_id>/join', methods=['POST'])
-def api_join_game(game_id:str):
+@app.route('/api/v1/game/join', methods=['POST'])
+def api_join_game():
     return success({})
 
 
-@app.route('/api/v1/game/<game_id>/start', methods=['POST'])
-def api_start_game(game_id:str):
+@app.route('/api/v1/game/start', methods=['POST'])
+def api_start_game():
     return success({})
