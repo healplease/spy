@@ -10,7 +10,7 @@ class Config():
     FLASK_HOST = os.environ.get('FLASK_HOST', gethostbyname(gethostname()))
     FLASK_PORT = os.environ.get('FLASK_PORT', 8000)
 
-    #TESTING = True
+    TESTING = True
 
     # database settings
     MONGO_PROTOCOL = 'mongodb+srv'
