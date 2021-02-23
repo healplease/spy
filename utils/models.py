@@ -19,7 +19,7 @@ class Model(object):
         self.instance = instance
 
     def __str__(self):
-        return f'<{self.__class__.__name__}:{self.pk}={self.instance[self.pk]}>'
+        return f'<{self.__class__.__name__}:{self.__class__.pk}={self.instance[self.pk]}>'
 
     def __getattr__(self, name):
         instance_attrs = [] if not isinstance(self.instance, dict) else list(self.instance.keys())

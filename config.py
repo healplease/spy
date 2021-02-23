@@ -7,7 +7,7 @@ class Config():
     DEBUG = bool(os.environ.get('FLASK_DEBUG', 1))
     SECRET_KEY = os.environ.get('SECRET_KEY', 'flask')
 
-    FLASK_HOST = os.environ.get('FLASK_HOST', '127.0.0.1')
+    FLASK_HOST = os.environ.get('FLASK_HOST', gethostbyname(gethostname()))
     FLASK_PORT = os.environ.get('FLASK_PORT', 8000)
 
     #TESTING = True
