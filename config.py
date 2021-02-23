@@ -18,9 +18,9 @@ class Config():
     MONGO_PASSWORD = 'Alex2020'
     MONGO_HOST = 'dimabot.tfomu.mongodb.net'
     MONGO_DATABASE = 'spy'
-    MONGO_ARGUMENTS = {
+    MONGO_ARGUMENTS = parse.urlencode(tuple({
         'retryWrites': 'true',
         'w': 'majority'
-    }
+    }.items()))
 
-    DATABASE_URL = f'{MONGO_PROTOCOL}://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}/{MONGO_DATABASE}{"?" if MONGO_ARGUMENTS else ""}{parse.urlencode(tuple(MONGO_ARGUMENTS.items()))}'
+    DATABASE_URL = f'{MONGO_PROTOCOL}://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}/{MONGO_DATABASE}{"?" if MONGO_ARGUMENTS else ""}{MONGO_ARGUMENTS}'
