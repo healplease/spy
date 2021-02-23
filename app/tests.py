@@ -39,6 +39,14 @@ class TestUser(unittest.TestCase):
         self.assertNotEqual(before, after)
         user.delete()
 
+    def test_change_pk_in_update(self):
+        user = User.create('alice', password='qwerty')
+        before = user.username
+        user.update(**{User.pk: 'bob', 'password': 'qwerty'})   # remade to fetch the actual pk for this model 
+        after = user.username
+        self.assertEqual(before, after)
+        user.delete()
+
     def test_user_str(self):
         user = User.create('alice')
         self.assertEqual(str(user), '<User:username=alice>')
