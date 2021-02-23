@@ -48,9 +48,10 @@ class Model(object):
     def update(self, *args, **kwargs):
         kwargs.pop(self.__class__.pk, None) # prevent updating of the pk itself - it can't be changed through model
 
-        query = { self.__class__.pk: self.instance[self.__class__.pk] }
-        update = { '$set': kwargs }
-        db[self.__class__.collection].update_one(query, update)
+        if kwargs:  # if only pk reied to update
+            query = { self.__class__.pk: self.instance[self.__class__.pk] }
+            update = { '$set': kwargs }
+            db[self.__class__.collection].update_one(query, update)
         
         self.read()  # update the instance as well
 

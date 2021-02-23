@@ -3,6 +3,7 @@ from string import ascii_letters, digits
 from flask import request, url_for
 
 from app import app, db, models
+from app.models import User, Game
 from utils.api import success, error
 
 
@@ -28,25 +29,29 @@ def api_get_games_list():
     return success(games)
 
 
-@app.route('/api/v1/game/<game>', methods=['GET'])
-def api_get_game(game):
-    return success({})
+@app.route('/api/v1/game/<game_id>', methods=['GET'])
+def api_get_game(game_id:str):
+    try:
+        game = Game(game_id)
+        return success(game)
+    except Exception as e:
+        return error(404, str(e))
 
 
 @app.route('/api/v1/game/<game_id>/create', methods=['POST'])
-def api_create_game(game_id):
+def api_create_game(game_id:str):
     try:
-        game = models.Game.create(game_id)
+        game = Game.create(game_id)
         return success(game)
     except Exception as e:
-        return error(403, e)
+        return error(403, str(e))
 
 
-@app.route('/api/v1/game/<game>/join', methods=['POST'])
-def api_join_game(game):
+@app.route('/api/v1/game/<game_id>/join', methods=['POST'])
+def api_join_game(game_id:str):
     return success({})
 
 
-@app.route('/api/v1/game/<game>/start', methods=['POST'])
-def api_start_game(game):
+@app.route('/api/v1/game/<game_id>/start', methods=['POST'])
+def api_start_game(game_id:str):
     return success({})
